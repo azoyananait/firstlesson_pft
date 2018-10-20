@@ -1,3 +1,6 @@
+.idea
+.DS_Store
+firstlesson_pft.iml
 .gradle
 /build/
 
@@ -9,8 +12,3 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
-
-# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
-# gradle/wrapper/gradle-wrapper.properties
-.idea/workspace.xml
-.DS_Store
