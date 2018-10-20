@@ -3,6 +3,7 @@
 firstlesson_pft.iml
 .gradle
 /build/
+out
 
 # Ignore Gradle GUI config
 gradle-app.setting
