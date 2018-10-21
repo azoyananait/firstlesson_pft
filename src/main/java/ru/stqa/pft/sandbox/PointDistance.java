@@ -1,9 +1,15 @@
 package ru.stqa.pft.sandbox;
 
+
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 public class PointDistance {
-  public static void main (String[] args) {
+
+  @Test
+  public void Distance() {
     Point p1 = new Point (2, 8);
     Point p2 = new Point(4, 12);
-    System.out.println("Расстояние между точками А с координатами (" + p1.x +"; "+ p1.y +") и В с координатами (" + p2.x + "; " + p2.y + ") равна " + p1.distance(p2));
+    Assert.assertEquals(p1.distance(p2), 4.47213595499958);
   }
 }
