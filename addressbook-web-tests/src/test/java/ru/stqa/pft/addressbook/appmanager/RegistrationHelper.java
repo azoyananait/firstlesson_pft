@@ -6,20 +6,17 @@ import ru.stqa.pft.addressbook.model.RegisterData;
 
 public class RegistrationHelper extends HelperBase {
 
-  public RegistrationHelper initRegistration;
-
   public RegistrationHelper (WebDriver wd) {
     super(wd);
-
   }
 
   public void returnToMainPage() {
-    wd.findElement(By.linkText("home page")).click();
-    wd.findElement(By.linkText("Logout")).click();
+    click(By.linkText("home page"));
+    click(By.linkText("Logout"));
   }
 
-  public void submit(By locator) {
-    click(locator);
+  public void submit() {
+    click(By.xpath("(//input[@name='submit'])[2]"));
   }
 
   public void fillRegisterForm(RegisterData registerData) {
@@ -35,14 +32,12 @@ public class RegistrationHelper extends HelperBase {
     fill(By.name("work"), registerData.getWork());
     fill(By.name("fax"), registerData.getFax());
     fill(By.name("email"), registerData.getEmail());
-    wd.findElement(By.name("email2")).click();
-
-
   }
 
   private void fill(By locator, String text) {
-    wd.findElement(locator).click();
+    click(locator);
     wd.findElement(locator).clear();
     wd.findElement(locator).sendKeys(text);
   }
+
 }
