@@ -5,12 +5,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.concurrent.TimeUnit;
 
-public class ApplicationManager {
+public class ApplicationManager{
   WebDriver wd;
 
   private SessionHelper sessionHelper;
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
+  private RegistrationHelper RegistrationHelper;
 
   public void init() {
     wd = new ChromeDriver();
@@ -19,6 +20,7 @@ public class ApplicationManager {
     groupHelper = new GroupHelper(wd);
     navigationHelper = new NavigationHelper(wd);
     sessionHelper = new SessionHelper(wd);
+    RegistrationHelper = new RegistrationHelper(wd);
     sessionHelper.login("admin", "secret");
   }
 
@@ -27,9 +29,7 @@ public class ApplicationManager {
     wd.quit();
   }
 
-  public GroupHelper getGroupHelper() {
-    return groupHelper;
-  }
+  public GroupHelper getGroupHelper() { return groupHelper; }
 
   public NavigationHelper getNavigationHelper() {
     return navigationHelper;
@@ -37,5 +37,8 @@ public class ApplicationManager {
 
   public void logOutFromGroupPage() {
 
+  }
+
+  public RegistrationHelper getRegistrationHelper() { return RegistrationHelper;
   }
 }
