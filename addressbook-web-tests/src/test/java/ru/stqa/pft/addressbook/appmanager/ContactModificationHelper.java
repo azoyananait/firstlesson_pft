@@ -1,5 +1,7 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import jdk.internal.instrumentation.Logger;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -17,4 +19,16 @@ public class ContactModificationHelper extends HelperBase {
     click(By.name("update"));
   }
 
+  public void initContactSelect() {
+    click(By.xpath("//input[@id='3']"));
+  }
+
+  public void initContactDelete() {
+    click(By.xpath("//input[@value='Delete']"));
+  }
+
+  public void checkAlert() {
+    Alert alert = wd.switchTo().alert();
+    alert.accept();
+  }
 }
