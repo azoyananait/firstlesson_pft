@@ -11,7 +11,7 @@ public class RegistrationTests extends TestBase {
     app.getNavigationHelper().gotoAddNewPage();
     app.getRegistrationHelper().fillRegisterForm(registerData);
     app.getRegistrationHelper().submit();
-    app.getRegistrationHelper().returnToMainPage();
+    app.getNavigationHelper().returnToMainPage();
   }
 
 }

@@ -11,34 +11,39 @@ public class ApplicationManager{
   private SessionHelper sessionHelper;
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
-  private RegistrationHelper RegistrationHelper;
+  private RegistrationHelper registrationHelper;
+  private ContactModificationHelper contactModificationHelper;
 
   public void init() {
     wd = new ChromeDriver();
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/index.php");
+
     groupHelper = new GroupHelper(wd);
     navigationHelper = new NavigationHelper(wd);
     sessionHelper = new SessionHelper(wd);
-    RegistrationHelper = new RegistrationHelper(wd);
     sessionHelper.login("admin", "secret");
+    registrationHelper = new RegistrationHelper(wd);
+    contactModificationHelper = new ContactModificationHelper(wd);
   }
-
 
   public void stop () {
     wd.quit();
   }
 
-  public GroupHelper getGroupHelper() { return groupHelper; }
+  public GroupHelper getGroupHelper() {
+    return groupHelper;
+  }
 
   public NavigationHelper getNavigationHelper() {
     return navigationHelper;
   }
 
-  public void logOutFromGroupPage() {
-
+  public RegistrationHelper getRegistrationHelper() {
+    return registrationHelper;
   }
 
-  public RegistrationHelper getRegistrationHelper() { return RegistrationHelper;
+  public ContactModificationHelper getContactModificationHelper() {
+    return contactModificationHelper;
   }
 }

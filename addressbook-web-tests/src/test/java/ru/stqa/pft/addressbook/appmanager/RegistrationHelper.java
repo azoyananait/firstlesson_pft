@@ -10,11 +10,6 @@ public class RegistrationHelper extends HelperBase {
     super(wd);
   }
 
-  public void returnToMainPage() {
-    click(By.linkText("home page"));
-    click(By.linkText("Logout"));
-  }
-
   public void submit() {
     click(By.xpath("(//input[@name='submit'])[2]"));
   }

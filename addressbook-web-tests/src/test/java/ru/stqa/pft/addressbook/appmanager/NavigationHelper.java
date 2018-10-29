@@ -7,7 +7,6 @@ public class NavigationHelper extends HelperBase{
 
   public NavigationHelper(WebDriver wd) {
     super(wd);
-
   }
 
   public void gotoGroupPage() {
@@ -15,6 +14,16 @@ public class NavigationHelper extends HelperBase{
   }
 
   public void gotoAddNewPage() {
-    wd.findElement(By.linkText("add new")).click();
+    click(By.linkText("add new"));
   }
+
+  public void goToHomePage() {
+    click(By.linkText("home"));
+  }
+
+  public void returnToMainPage() {
+    click(By.linkText("home"));
+    click(By.linkText("Logout"));
+  }
+
 }
