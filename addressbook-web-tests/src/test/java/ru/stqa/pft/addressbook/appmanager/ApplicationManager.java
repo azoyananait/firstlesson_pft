@@ -2,15 +2,11 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.safari.SafariDriver;
 
-
 import java.util.concurrent.TimeUnit;
-
-import static org.openqa.selenium.remote.BrowserType.CHROME;
 
 public class ApplicationManager{
   WebDriver wd;
