@@ -2,8 +2,13 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.safari.SafariDriver;
+
 
 import java.util.concurrent.TimeUnit;
+
+import static org.openqa.selenium.remote.BrowserType.CHROME;
 
 public class ApplicationManager{
   WebDriver wd;
@@ -13,9 +18,21 @@ public class ApplicationManager{
   private GroupHelper groupHelper;
   private RegistrationHelper registrationHelper;
   private ContactModificationHelper contactModificationHelper;
+  private String browser;
+
+  public ApplicationManager(String browser) {
+
+    this.browser = browser;
+  }
 
   public void init() {
-    wd = new ChromeDriver();
+      if (browser == CHROME){
+      wd = new ChromeDriver();
+    }else{
+      if (browser == BrowserType.SAFARI){
+        wd = new SafariDriver();
+      }
+    }
     wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     wd.get("http://localhost/addressbook/index.php");
 
