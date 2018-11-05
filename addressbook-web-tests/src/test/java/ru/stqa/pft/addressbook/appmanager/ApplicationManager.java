@@ -37,9 +37,9 @@ public class ApplicationManager{
 //        wd = new ChromeDriver();
 //    }
 
-    if(browser == BrowserType.SAFARI){
+    if(browser.equals(BrowserType.SAFARI)){
       wd = new SafariDriver();
-    }else if(browser == BrowserType.OPERA_BLINK){
+    }else if(browser.equals(BrowserType.OPERA_BLINK)){
       wd = new OperaDriver();
     }
     else{
