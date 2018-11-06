@@ -2,6 +2,7 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.safari.SafariDriver;
@@ -41,6 +42,8 @@ public class ApplicationManager{
       wd = new SafariDriver();
     }else if(browser.equals(BrowserType.OPERA_BLINK)){
       wd = new OperaDriver();
+    }else if(browser.equals(BrowserType.FIREFOX)){
+      wd = new FirefoxDriver();
     }
     else{
       wd = new ChromeDriver();
