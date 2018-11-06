@@ -13,8 +13,9 @@ public class RegisterData {
   private final String work;
   private final String fax;
   private final String email;
+  private String group;
 
-  public RegisterData(String name, String middle, String last, String nick, String title, String company, String address, String home, String mobile, String work, String fax, String email) {
+  public RegisterData(String name, String middle, String last, String nick, String title, String company, String address, String home, String mobile, String work, String fax, String email, String group) {
     this.name = name;
     this.middle = middle;
     this.last = last;
@@ -27,6 +28,7 @@ public class RegisterData {
     this.work = work;
     this.fax = fax;
     this.email = email;
+    this.group = group;
   }
 
   public String getName() {
@@ -75,5 +77,9 @@ public class RegisterData {
 
   public String getEmail() {
     return email;
+  }
+
+  public String getGroup() {
+    return group;
   }
 }
