@@ -4,14 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-public class GroupHelper extends HelperBase {
+public class GroupHelper extends NavigationHelper {
 
   public GroupHelper(WebDriver wd) {
     super(wd);
-  }
-
-  public void submitGroupCreation() {
-    click(By.name("submit"));
   }
 
   public void fillGroupForm(GroupData groupData) {
@@ -20,27 +16,41 @@ public class GroupHelper extends HelperBase {
     type(By.name("group_footer"), groupData.getFooter());
   }
 
-  public void initGroupCreation() {
+  public void newGroup() {
     click(By.name("new"));
   }
 
-  public void deleteSelectedGroups() {
-    click(By.name("delete"));
+  public void addGroup() {
+    click(By.name("submit"));
   }
 
-  public void selectGroup() {
+  public void selectGroup(GroupData registrationData) {
+    createGroup(registrationData);
     click(By.name("selected[]"));
   }
 
-  public void returnToGroupPage() {
-    click(By.linkText("group page"));
-  }
-
-  public void initGroupModification() {
+  public void editGroup() {
     click(By.name("edit"));
   }
 
-  public void submitGroupModification() {
+  public void updateGroup() {
     click(By.name("update"));
+  }
+
+  public void deleteGroup() {
+    click(By.name("delete"));
+  }
+
+  /**
+   * Создание группы, если не существует ни одной
+   * @param registrationData данные для регистрации контакта
+   */
+  private void createGroup(GroupData registrationData) {
+    if(!isElementPresent(By.className("group"))){
+      newGroup();
+      fillGroupForm(registrationData);
+      addGroup();
+      returnToGroupPage();
+    }
   }
 }

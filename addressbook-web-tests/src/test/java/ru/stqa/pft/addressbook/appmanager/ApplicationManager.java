@@ -15,8 +15,7 @@ public class ApplicationManager{
   private SessionHelper sessionHelper;
   private NavigationHelper navigationHelper;
   private GroupHelper groupHelper;
-  private RegistrationHelper registrationHelper;
-  private ContactModificationHelper contactModificationHelper;
+  private ContactHelper contactHelper;
   private String browser;
 
   public ApplicationManager(String browser) {
@@ -24,20 +23,6 @@ public class ApplicationManager{
   }
 
   public void init() {
-//    switch (browser){
-//      case BrowserType.SAFARI:
-//        wd = new SafariDriver();
-//        break;
-//      case BrowserType.FIREFOX:
-//        wd = new FirefoxDriver();
-//        break;
-//      case BrowserType.OPERA_BLINK:
-//        wd = new OperaDriver();
-//        break;
-//      default:
-//        wd = new ChromeDriver();
-//    }
-
     if(browser.equals(BrowserType.SAFARI)){
       wd = new SafariDriver();
     }else if(browser.equals(BrowserType.OPERA_BLINK)){
@@ -56,8 +41,7 @@ public class ApplicationManager{
     navigationHelper = new NavigationHelper(wd);
     sessionHelper = new SessionHelper(wd);
     sessionHelper.login("admin", "secret");
-    registrationHelper = new RegistrationHelper(wd);
-    contactModificationHelper = new ContactModificationHelper(wd);
+    contactHelper = new ContactHelper(wd);
   }
 
   public void stop () {
@@ -72,11 +56,7 @@ public class ApplicationManager{
     return navigationHelper;
   }
 
-  public RegistrationHelper getRegistrationHelper() {
-    return registrationHelper;
-  }
-
-  public ContactModificationHelper getContactModificationHelper() {
-    return contactModificationHelper;
+  public ContactHelper getContactHelper() {
+    return contactHelper;
   }
 }
