@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.annotations.*;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 public class GroupTests extends TestBase {
@@ -10,28 +11,37 @@ public class GroupTests extends TestBase {
   @Test
   public void testGroupCreation() {
     app.getGroupHelper().gotoGroupPage();
+    int before = app.getGroupHelper().getGroupCount();
     app.getGroupHelper().newGroup();
     app.getGroupHelper().fillGroupForm(registrationData);
     app.getGroupHelper().addGroup();
     app.getGroupHelper().returnToGroupPage();
+   int after = app.getGroupHelper().getGroupCount();
+   Assert.assertEquals(after, before + 1);
   }
 
   @Test
   public void testGroupModification() {
     app.getGroupHelper().gotoGroupPage();
+    int before = app.getGroupHelper().getGroupCount();
     app.getGroupHelper().selectGroup(registrationData);
     app.getGroupHelper().editGroup();
     app.getGroupHelper().fillGroupForm(modificationData);
     app.getGroupHelper().updateGroup();
     app.getGroupHelper().returnToGroupPage();
+    int after = app.getGroupHelper().getGroupCount();
+    Assert.assertEquals(after, before);
   }
 
   @Test
   public void testGroupDeletionTests() {
     app.getGroupHelper().gotoGroupPage();
+    int before = app.getGroupHelper().getGroupCount();
     app.getGroupHelper().selectGroup(registrationData);
     app.getGroupHelper().deleteGroup();
     app.getGroupHelper().returnToGroupPage();
+    int after = app.getGroupHelper().getGroupCount();
+    Assert.assertEquals(after, before - 1);
   }
 
 }

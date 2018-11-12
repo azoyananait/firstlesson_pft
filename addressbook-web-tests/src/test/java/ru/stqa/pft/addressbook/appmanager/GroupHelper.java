@@ -53,4 +53,7 @@ public class GroupHelper extends NavigationHelper {
       returnToGroupPage();
     }
   }
+    public int getGroupCount() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
 }
