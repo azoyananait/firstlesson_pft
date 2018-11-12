@@ -4,11 +4,12 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
 public class GroupTests extends TestBase {
-  private final GroupData registrationData = new GroupData("test1", null, null);
+  private final GroupData registrationData = new GroupData("test4", null, null);
 
   @Test
   public void testGroupCreation() {
@@ -21,15 +22,8 @@ public class GroupTests extends TestBase {
     List<GroupData> after = app.getGroupHelper().getGroupList();
    Assert.assertEquals(after.size(), before.size() + 1);
 
-
-   int max = 0;
-   for (GroupData g: after){
-     if (g.getId() > max){
-       max = g.getId();
-     }
-   }
+    registrationData.setId(after.stream().max(Comparator.comparingInt(GroupData::getId)).get().getId());
     before.add(registrationData);
-   registrationData.setId(max);
     Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
   }
 
@@ -53,6 +47,7 @@ public class GroupTests extends TestBase {
     before.add(group);
     Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
   }
+
 
   @Test
   public void testGroupDeletionTests() {
