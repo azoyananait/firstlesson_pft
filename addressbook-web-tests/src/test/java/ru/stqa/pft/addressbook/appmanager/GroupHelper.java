@@ -24,9 +24,8 @@ public class GroupHelper extends NavigationHelper {
     click(By.name("submit"));
   }
 
-  public void selectGroup(GroupData registrationData) {
-    createGroup(registrationData);
-    click(By.name("selected[]"));
+  public void selectGroup(int index) {
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
   public void editGroup() {
@@ -45,15 +44,22 @@ public class GroupHelper extends NavigationHelper {
    * Создание группы, если не существует ни одной
    * @param registrationData данные для регистрации контакта
    */
-  private void createGroup(GroupData registrationData) {
-    if(!isElementPresent(By.className("group"))){
+  public void createGroup(GroupData registrationData) {
       newGroup();
       fillGroupForm(registrationData);
       addGroup();
       returnToGroupPage();
-    }
   }
-    public int getGroupCount() {
+
+  /**
+   *
+   * @return
+   */
+  public boolean isThereAGroup(){
+    return isElementPresent(By.className("group"));
+  }
+
+  public int getGroupCount() {
     return wd.findElements(By.name("selected[]")).size();
   }
 }

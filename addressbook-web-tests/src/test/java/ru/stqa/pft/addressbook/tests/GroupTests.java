@@ -24,7 +24,10 @@ public class GroupTests extends TestBase {
   public void testGroupModification() {
     app.getGroupHelper().gotoGroupPage();
     int before = app.getGroupHelper().getGroupCount();
-    app.getGroupHelper().selectGroup(registrationData);
+    if(!app.getGroupHelper().isThereAGroup()) {
+      app.getGroupHelper().createGroup(registrationData);
+    }
+    app.getGroupHelper().selectGroup(before - 1);
     app.getGroupHelper().editGroup();
     app.getGroupHelper().fillGroupForm(modificationData);
     app.getGroupHelper().updateGroup();
@@ -37,7 +40,10 @@ public class GroupTests extends TestBase {
   public void testGroupDeletionTests() {
     app.getGroupHelper().gotoGroupPage();
     int before = app.getGroupHelper().getGroupCount();
-    app.getGroupHelper().selectGroup(registrationData);
+    if(!app.getGroupHelper().isThereAGroup()) {
+      app.getGroupHelper().createGroup(registrationData);
+    }
+    app.getGroupHelper().selectGroup(before - 1);
     app.getGroupHelper().deleteGroup();
     app.getGroupHelper().returnToGroupPage();
     int after = app.getGroupHelper().getGroupCount();
