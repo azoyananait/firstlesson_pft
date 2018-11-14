@@ -1,5 +1,7 @@
 package ru.stqa.pft.addressbook.model;
 
+import java.util.Objects;
+
 public class RegisterData {
   private final String name;
   private final String middle;
@@ -29,6 +31,28 @@ public class RegisterData {
     this.fax = fax;
     this.email = email;
     this.group = group;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    RegisterData that = (RegisterData) o;
+    return Objects.equals(name, that.name) &&
+            Objects.equals(last, that.last);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, last);
+  }
+
+  @Override
+  public String toString() {
+    return "RegisterData{" +
+            "name='" + name + '\'' +
+            ", last='" + last + '\'' +
+            '}';
   }
 
   public String getName() {

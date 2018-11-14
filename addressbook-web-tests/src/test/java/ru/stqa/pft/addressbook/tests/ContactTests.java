@@ -44,6 +44,10 @@ public class ContactTests extends TestBase {
     app.getContactHelper().goToHomePage();
     List<RegisterData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before .size()- 1);
+
+    before.remove(before .size()- 1);
+      Assert.assertEquals(before, after);
+
   }
 
 }
