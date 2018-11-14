@@ -3,9 +3,13 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.RegisterData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends NavigationHelper {
 
@@ -34,7 +38,7 @@ public class ContactHelper extends NavigationHelper {
     }
   }
 
-  public void editContact(RegisterData registerData) {
+  public void editContact(RegisterData registerData, int i) {
     // проверяем если контакт существует, если нет - создаем
     // после чего нажимаем на редактирование
     createContact(registerData);
@@ -53,11 +57,11 @@ public class ContactHelper extends NavigationHelper {
     click(By.xpath("//input[@value='Delete']"));
   }
 
-  public void selectContact(RegisterData registerData){
+  public void selectContact(RegisterData registerData, int index){
     // проверяем если контакт существует, если нет - создаем
     // после чего выбираем контакт из таблицы
+    wd.findElements(By.xpath("//input[@type='checkbox']")).get(index).click();
     createContact(registerData);
-    click(By.xpath("//input[@type='checkbox']"));
   }
 
   public void checkAlert() {
@@ -84,4 +88,18 @@ public class ContactHelper extends NavigationHelper {
     }
   }
 
+  public int getContactCount() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
+
+  public List<RegisterData> getContactList() {
+    List<RegisterData> contacts = new ArrayList<RegisterData>();
+    List<WebElement> elements = wd.findElements(By.name("selected[]"));
+    for (WebElement element: elements) {
+      String name = element.getText();
+      RegisterData contact = new RegisterData("Test1", "Test2", "Test3", "Test4", "Test5", "Test6", "Test7", "Test8", "Test9", "Test10", "Test11", "Test@mail.ru", "test1");
+    contacts.add(contact);
+    }
+    return contacts;
+  }
 }
