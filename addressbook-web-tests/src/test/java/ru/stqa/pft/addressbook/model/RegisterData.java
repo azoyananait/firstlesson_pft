@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.model;
 import java.util.Objects;
 
 public class RegisterData {
+  private int id;
   private final String name;
   private final String middle;
   private final String last;
@@ -17,7 +18,9 @@ public class RegisterData {
   private final String email;
   private String group;
 
-  public RegisterData(String name, String middle, String last, String nick, String title, String company, String address, String home, String mobile, String work, String fax, String email, String group) {
+
+  public RegisterData(int id,String name, String middle, String last, String nick, String title, String company, String address, String home, String mobile, String work, String fax, String email, String group) {
+    this.id = id;
     this.name = name;
     this.middle = middle;
     this.last = last;
@@ -38,19 +41,42 @@ public class RegisterData {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     RegisterData that = (RegisterData) o;
-    return Objects.equals(name, that.name) &&
+    return id == that.id &&
+            Objects.equals(name, that.name) &&
             Objects.equals(last, that.last);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, last);
+    return Objects.hash(id, name, last);
+  }
+
+  public RegisterData(String name, String middle, String last, String nick, String title, String company, String address, String home, String mobile, String work, String fax, String email, String group) {
+    this.id = 0;
+    this.name = name;
+    this.middle = middle;
+    this.last = last;
+    this.nick = nick;
+    this.title = title;
+    this.company = company;
+    this.address = address;
+    this.home = home;
+    this.mobile = mobile;
+    this.work = work;
+    this.fax = fax;
+    this.email = email;
+    this.group = group;
+  }
+
+  public int getId() {
+    return id;
   }
 
   @Override
   public String toString() {
     return "RegisterData{" +
-            "name='" + name + '\'' +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
             ", last='" + last + '\'' +
             '}';
   }
@@ -105,5 +131,9 @@ public class RegisterData {
 
   public String getGroup() {
     return group;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 }

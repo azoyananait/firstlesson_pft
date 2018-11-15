@@ -40,9 +40,16 @@ public class ContactHelper extends NavigationHelper {
 
   public void editContact(RegisterData registerData, int i) {
     // проверяем если контакт существует, если нет - создаем
-    // после чего нажимаем на редактирование
     createContact(registerData);
-    click(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]/td[8]/a"));
+    int count = i;
+    // проверяем если контаков не было вообще, если пусто то добавляем +1
+    if(i == 0){
+      count = 1;
+    }
+    // перескочить шапку таблицы плюсуя 1 к общему количеству елементов
+    count++;
+    // редактирование последнего контакта в таблице
+    click(By.xpath("//*[@id=\"maintable\"]/tbody/tr[" + count + "]/td[8]/a"));
   }
 
   public void addContact(){
@@ -74,7 +81,6 @@ public class ContactHelper extends NavigationHelper {
     wd.findElement(locator).clear();
     wd.findElement(locator).sendKeys(text);
   }
-
   /**
    * Создания контакта, если не существует ни одного
    * @param registerData данные для регистрации контакта
@@ -87,18 +93,19 @@ public class ContactHelper extends NavigationHelper {
       goToHomePage();
     }
   }
-
   public int getContactCount() {
     return wd.findElements(By.name("selected[]")).size();
   }
 
   public List<RegisterData> getContactList() {
-    List<RegisterData> contacts = new ArrayList<RegisterData>();
-    List<WebElement> elements = wd.findElements(By.name("selected[]"));
+    List<RegisterData> contacts = new ArrayList<>();
+    List<WebElement> elements = wd.findElements(By.name("entry"));
     for (WebElement element: elements) {
-      String name = element.getText();
-      RegisterData contact = new RegisterData("Test1", "Test2", "Test3", "Test4", "Test5", "Test6", "Test7", "Test8", "Test9", "Test10", "Test11", "Test@mail.ru", "test1");
-    contacts.add(contact);
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
+      String lastName = element.findElement(By.xpath("td[2]")).getText();
+      String firstName = element.findElement(By.xpath("td[3]")).getText();
+      RegisterData contact = new RegisterData(id, firstName, "Test12", lastName, "Test4", "Test5", "Test6", "Test7", "Test8", "Test9", "Test10", "Test11", "Test@mail.ru", "test1");
+      contacts.add(contact);
     }
     return contacts;
   }
