@@ -54,6 +54,13 @@ public class GroupHelper extends NavigationHelper {
       addGroup();
       returnToGroupPage();
   }
+  public void modifyGroup(int index, GroupData group) {
+    selectGroup(index);
+    editGroup();
+    fillGroupForm(group);
+    updateGroup();
+    returnToGroupPage();
+  }
 
   /**
    *
