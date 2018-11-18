@@ -42,16 +42,14 @@ public class ContactTests extends TestBase {
     app.getContactHelper().goToHomePage();
     List<RegisterData> before = app.getContactHelper().getContactList();
     int index = before.size() - 1;
-    app.getContactHelper().editContact(index);
     modificationData.setId(before.get(index).getId());
-    app.getContactHelper().fillContactForm(modificationData, false);
-    app.getContactHelper().updateContact();
-    app.getContactHelper().goToHomePage();
+    app.getContactHelper().modifyContact(index, modificationData);
     List<RegisterData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
     before.remove(index);
     before.add(modificationData);
     Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+
   }
 
   @Test

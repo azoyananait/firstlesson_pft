@@ -108,6 +108,12 @@ public class ContactHelper extends NavigationHelper {
     addContact();
     goToHomePage();
   }
+  public void modifyContact(int index, RegisterData modificationData) {
+   editContact(index);
+   fillContactForm(modificationData, false);
+    updateContact();
+    goToHomePage();
+  }
 
   /**
    *
