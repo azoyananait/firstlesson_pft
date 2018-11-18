@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.RegisterData;
 
@@ -11,6 +12,13 @@ import java.util.List;
 public class ContactTests extends TestBase {
   private final RegisterData registerData = new RegisterData("Test1", "Test2", "Test3", "Test4", "Test5", "Test6", "Test7", "Test8", "Test9", "Test10", "Test11", "Test@mail.ru", "test1");
   private final RegisterData modificationData = new RegisterData("Test10", "Test12", "Test3", "Test4", "Test5", "Test6", "Test7", "Test8", "Test9", "Test10", "Test11", "Test@mail.ru", "test1");
+
+  @BeforeMethod
+  public void ensurePreconditions(){
+    if(app.getContactHelper().getContactCount() == 0){
+      app.getContactHelper().createContact(registerData);
+    }
+  }
 
   @Test
   public void testRegistration() {
@@ -32,16 +40,16 @@ public class ContactTests extends TestBase {
   @Test
   public void testContactModification() {
     app.getContactHelper().goToHomePage();
-
     List<RegisterData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().editContact(registerData, before.size());
-    modificationData.setId(before.get(before.size() -1).getId());
+    int index = before.size() - 1;
+    app.getContactHelper().editContact(index);
+    modificationData.setId(before.get(index).getId());
     app.getContactHelper().fillContactForm(modificationData, false);
     app.getContactHelper().updateContact();
     app.getContactHelper().goToHomePage();
     List<RegisterData> after = app.getContactHelper().getContactList();
     Assert.assertEquals(after.size(), before.size());
-    before.remove(before.size() - 1);
+    before.remove(index);
     before.add(modificationData);
     Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
   }
@@ -50,7 +58,7 @@ public class ContactTests extends TestBase {
   public void testContactDelete() {
     app.getContactHelper().goToHomePage();
     List<RegisterData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().selectContact(registerData,before.size() - 1);
+    app.getContactHelper().selectContact(before.size() - 1);
     app.getContactHelper().deleteContact();
     app.getContactHelper().checkAlert();
     app.getContactHelper().goToHomePage();
@@ -58,8 +66,7 @@ public class ContactTests extends TestBase {
     Assert.assertEquals(after.size(), before .size()- 1);
 
     before.remove(before .size() - 1);
-      Assert.assertEquals(before, after);
-
+    Assert.assertEquals(before, after);
   }
 
 }

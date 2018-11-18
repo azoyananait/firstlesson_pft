@@ -54,6 +54,7 @@ public class GroupHelper extends NavigationHelper {
       addGroup();
       returnToGroupPage();
   }
+
   public void modifyGroup(int index, GroupData group) {
     selectGroup(index);
     editGroup();
@@ -70,8 +71,6 @@ public class GroupHelper extends NavigationHelper {
     return isElementPresent(By.className("group"));
   }
 
-
-
   public List<GroupData> getGroupList() {
     List<GroupData> groups = new ArrayList<>();
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
@@ -83,4 +82,5 @@ public class GroupHelper extends NavigationHelper {
     }
     return groups;
   }
+  
 }

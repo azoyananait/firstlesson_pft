@@ -17,6 +17,11 @@ public class ContactHelper extends NavigationHelper {
     super(wd);
   }
 
+  /**
+   * Заполнение формы
+   * @param registerData данные для регистрации
+   * @param isRegistration флаг регистрации/модификации
+   */
   public void fillContactForm(RegisterData registerData, boolean isRegistration) {
     fill(By.name("firstname"), registerData.getName());
     fill(By.name("middlename"), registerData.getMiddle());
@@ -38,45 +43,57 @@ public class ContactHelper extends NavigationHelper {
     }
   }
 
-  public void editContact(RegisterData registerData, int i) {
-    // проверяем если контакт существует, если нет - создаем
-    createContact(registerData);
-    int count = i;
-    // проверяем если контаков не было вообще, если пусто то добавляем +1
-    if(i == 0){
-      count = 1;
-    }
-    // перескочить шапку таблицы плюсуя 1 к общему количеству елементов
-    count++;
-    // редактирование последнего контакта в таблице
-    click(By.xpath("//*[@id=\"maintable\"]/tbody/tr[" + count + "]/td[8]/a"));
+  /**
+   *
+   * @param i
+   */
+  public void editContact(int i) {
+    wd.findElements(By.name("entry")).get(i).findElement(By.xpath("td[8]")).click();
   }
 
+  /**
+   *
+   */
   public void addContact(){
     click(By.xpath("(//input[@value='Enter'])"));
   }
 
+  /**
+   *
+   */
   public void updateContact(){
     click(By.xpath("//input[@value='Update']"));
   }
 
+  /**
+   *
+   */
   public void deleteContact(){
     click(By.xpath("//input[@value='Delete']"));
   }
 
-  public void selectContact(RegisterData registerData, int index){
-    // проверяем если контакт существует, если нет - создаем
-    // после чего выбираем контакт из таблицы
-    wd.findElements(By.xpath("//input[@type='checkbox']")).get(index).click();
-    createContact(registerData);
+  /**
+   *
+   * @param index
+   */
+  public void selectContact(int index){
+    wd.findElements(By.name("selected[]")).get(index).click();
   }
 
-  public void checkAlert() {
+  /**
+   *
+   */
+  public void checkAlert(){
     Alert alert = wd.switchTo().alert();
     alert.accept();
   }
 
-  private void fill(By locator, String text) {
+  /**
+   *
+   * @param locator
+   * @param text
+   */
+  private void fill(By locator, String text){
     click(locator);
     wd.findElement(locator).clear();
     wd.findElement(locator).sendKeys(text);
@@ -85,18 +102,25 @@ public class ContactHelper extends NavigationHelper {
    * Создания контакта, если не существует ни одного
    * @param registerData данные для регистрации контакта
    */
-  private void createContact(RegisterData registerData){
-    if(!isElementPresent(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]"))) {
-      gotoAddNewPage();
-      fillContactForm(registerData, true);
-      addContact();
-      goToHomePage();
-    }
+  public void createContact(RegisterData registerData){
+    gotoAddNewPage();
+    fillContactForm(registerData, true);
+    addContact();
+    goToHomePage();
   }
+
+  /**
+   *
+   * @return
+   */
   public int getContactCount() {
     return wd.findElements(By.name("selected[]")).size();
   }
 
+  /**
+   *
+   * @return
+   */
   public List<RegisterData> getContactList() {
     List<RegisterData> contacts = new ArrayList<>();
     List<WebElement> elements = wd.findElements(By.name("entry"));
@@ -109,4 +133,5 @@ public class ContactHelper extends NavigationHelper {
     }
     return contacts;
   }
+
 }

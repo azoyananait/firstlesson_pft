@@ -12,7 +12,7 @@ public class GroupTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions(){
-    app.getGroupHelper().gotoGroupPage();
+    app.getGroupHelper().goToGroupPage();
     if(!app.getGroupHelper().isThereAGroup()) {
       app.getGroupHelper().createGroup(registrationData);
     }
@@ -20,7 +20,7 @@ public class GroupTests extends TestBase {
 
   @Test
   public void testGroupCreation() {
-    app.getGroupHelper().gotoGroupPage();
+    app.getGroupHelper().goToGroupPage();
     List<GroupData> before = app.getGroupHelper().getGroupList();
     app.getGroupHelper().newGroup();
     app.getGroupHelper().fillGroupForm(registrationData);
