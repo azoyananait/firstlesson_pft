@@ -102,7 +102,7 @@ public class ContactHelper extends NavigationHelper {
    * Создания контакта, если не существует ни одного
    * @param registerData данные для регистрации контакта
    */
-  public void createContact(RegisterData registerData){
+  public void create(RegisterData registerData){
     gotoAddNewPage();
     fillContactForm(registerData, true);
     addContact();
@@ -114,12 +114,18 @@ public class ContactHelper extends NavigationHelper {
     updateContact();
     goToHomePage();
   }
+  public void delete(int index) {
+    selectContact(index);
+    deleteContact();
+    checkAlert();
+    goToHomePage();
+  }
 
   /**
    *
    * @return
    */
-  public int getContactCount() {
+  public int count() {
     return wd.findElements(By.name("selected[]")).size();
   }
 
@@ -127,7 +133,7 @@ public class ContactHelper extends NavigationHelper {
    *
    * @return
    */
-  public List<RegisterData> getContactList() {
+  public List<RegisterData> list() {
     List<RegisterData> contacts = new ArrayList<>();
     List<WebElement> elements = wd.findElements(By.name("entry"));
     for (WebElement element: elements) {

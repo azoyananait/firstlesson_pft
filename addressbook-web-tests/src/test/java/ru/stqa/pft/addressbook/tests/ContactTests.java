@@ -15,21 +15,21 @@ public class ContactTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions(){
-    if(app.getContactHelper().getContactCount() == 0){
-      app.getContactHelper().createContact(registerData);
+    if(app.contact().count() == 0){
+      app.contact().create(registerData);
     }
   }
 
   @Test
   public void testRegistration() {
-    app.getContactHelper().goToHomePage();
-    List<RegisterData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().gotoAddNewPage();
+    app.contact().goToHomePage();
+    List<RegisterData> before = app.contact().list();
+    app.contact().gotoAddNewPage();
     RegisterData contact = new RegisterData("Test1", "Test2", "Test3", "Test4", "Test5", "Test6", "Test7", "Test8", "Test9", "Test10", "Test11", "Test@mail.ru", "test1");
-    app.getContactHelper().fillContactForm(registerData, true);
-    app.getContactHelper().addContact();
-    app.getContactHelper().goToHomePage();
-    List<RegisterData> after = app.getContactHelper().getContactList();
+    app.contact().fillContactForm(registerData, true);
+    app.contact().addContact();
+    app.contact().goToHomePage();
+    List<RegisterData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size() + 1);
 
     contact.setId(after.stream().max((Comparator<RegisterData>) (o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
@@ -39,12 +39,12 @@ public class ContactTests extends TestBase {
 
   @Test
   public void testContactModification() {
-    app.getContactHelper().goToHomePage();
-    List<RegisterData> before = app.getContactHelper().getContactList();
+    app.contact().goToHomePage();
+    List<RegisterData> before = app.contact().list();
     int index = before.size() - 1;
     modificationData.setId(before.get(index).getId());
-    app.getContactHelper().modifyContact(index, modificationData);
-    List<RegisterData> after = app.getContactHelper().getContactList();
+    app.contact().modifyContact(index, modificationData);
+    List<RegisterData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size());
     before.remove(index);
     before.add(modificationData);
@@ -54,17 +54,16 @@ public class ContactTests extends TestBase {
 
   @Test
   public void testContactDelete() {
-    app.getContactHelper().goToHomePage();
-    List<RegisterData> before = app.getContactHelper().getContactList();
-    app.getContactHelper().selectContact(before.size() - 1);
-    app.getContactHelper().deleteContact();
-    app.getContactHelper().checkAlert();
-    app.getContactHelper().goToHomePage();
-    List<RegisterData> after = app.getContactHelper().getContactList();
+    app.contact().goToHomePage();
+    List<RegisterData> before = app.contact().list();
+    int index = before.size() - 1;
+    app.contact().delete(index);
+    List<RegisterData> after = app.contact().list();
     Assert.assertEquals(after.size(), before .size()- 1);
 
-    before.remove(before .size() - 1);
+    before.remove(index);
     Assert.assertEquals(before, after);
   }
+  
 
 }

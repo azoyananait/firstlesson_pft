@@ -48,18 +48,25 @@ public class GroupHelper extends NavigationHelper {
    * Создание группы, если не существует ни одной
    * @param registrationData данные для регистрации контакта
    */
-  public void createGroup(GroupData registrationData) {
+  public void create(GroupData registrationData) {
       newGroup();
       fillGroupForm(registrationData);
       addGroup();
       returnToGroupPage();
   }
 
-  public void modifyGroup(int index, GroupData group) {
+  public void modify(int index, GroupData group) {
     selectGroup(index);
     editGroup();
     fillGroupForm(group);
     updateGroup();
+    returnToGroupPage();
+  }
+
+
+  public void delete(int index) {
+    selectGroup(index);
+    deleteGroup();
     returnToGroupPage();
   }
 
@@ -71,7 +78,7 @@ public class GroupHelper extends NavigationHelper {
     return isElementPresent(By.className("group"));
   }
 
-  public List<GroupData> getGroupList() {
+  public List<GroupData> list() {
     List<GroupData> groups = new ArrayList<>();
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
     for (WebElement element: elements){
