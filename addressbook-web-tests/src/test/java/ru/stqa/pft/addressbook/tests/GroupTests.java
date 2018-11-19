@@ -13,7 +13,7 @@ public class GroupTests extends TestBase {
   @BeforeMethod
   public void ensurePreconditions(){
     app.group().goToGroupPage();
-    if(app.group().list().size() == 0) {
+    if(app.group().all().size() == 0) {
       app.group().create(registrationData);
     }
   }
@@ -21,48 +21,43 @@ public class GroupTests extends TestBase {
   @Test
   public void testGroupCreation() {
     app.group().goToGroupPage();
-    List<GroupData> before = app.group().list();
+    Set<GroupData> before = app.group().all();
     app.group().newGroup();
     app.group().fillGroupForm(registrationData);
     app.group().addGroup();
     app.group().returnToGroupPage();
-    List<GroupData> after = app.group().list();
+    Set<GroupData> after = app.group().all();
    Assert.assertEquals(after.size(), before.size() + 1);
 
-    before.add(registrationData);
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
+   registrationData.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
+   before.add(registrationData);
     Assert.assertEquals(before, after);
   }
 
   @Test
   public void testGroupModification() {
-    List<GroupData> before = app.group().list();
-    int index = before.size() - 1;
+    Set<GroupData> before = app.group().all();
+    GroupData modifiedGroup = before.iterator().next();
     GroupData group = new GroupData()
-            .withId(before.get(index).getId()).withName("test1").withHeader("test2").withFooter("test3");
-    app.group().modify(index, group);
-    List<GroupData> after = app.group().list();
+            .withId(modifiedGroup.getId()).withName("test1").withHeader("test2").withFooter("test3");
+    app.group().modify(group);
+    Set<GroupData> after = app.group().all();
     Assert.assertEquals(after.size(), before.size());
 
-    before.remove(index);
+    before.remove(modifiedGroup);
     before.add(group);
-    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
-    before.sort(byId);
-    after.sort(byId);
     Assert.assertEquals(before, after);
   }
 
   @Test
   public void testGroupDeletionTests() {
-    List<GroupData> before = app.group().list();
-    int index = before.size() - 1;
-    app.group().delete(index);
-    List<GroupData> after = app.group().list();
+    Set<GroupData> before = app.group().all();
+    GroupData deletedGroup = before.iterator().next();
+    app.group().delete(deletedGroup);
+    Set<GroupData> after = app.group().all();
     Assert.assertEquals(after.size(), before.size() - 1);
 
-    before.remove(index);
+    before.remove(deletedGroup);
       Assert.assertEquals (before, after);
   }
 
