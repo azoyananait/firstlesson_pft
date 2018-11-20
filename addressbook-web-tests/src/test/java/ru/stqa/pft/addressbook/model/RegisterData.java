@@ -3,38 +3,23 @@ package ru.stqa.pft.addressbook.model;
 import java.util.Objects;
 
 public class RegisterData {
-  private int id;
-  private final String name;
-  private final String middle;
-  private final String last;
-  private final String nick;
-  private final String title;
-  private final String company;
-  private final String address;
-  private final String home;
-  private final String mobile;
-  private final String work;
-  private final String fax;
-  private final String email;
-  private String group;
+  private int id = 0;
+  private  String name;
+  private  String middle;
+  private  String last;
+  private  String nick;
+  private  String title;
+  private  String company;
+  private  String address;
+  private  String home;
+  private  String mobile;
+  private  String work;
+  private  String fax;
+  private  String email;
+  private  String group;
 
 
-  public RegisterData(int id,String name, String middle, String last, String nick, String title, String company, String address, String home, String mobile, String work, String fax, String email, String group) {
-    this.id = id;
-    this.name = name;
-    this.middle = middle;
-    this.last = last;
-    this.nick = nick;
-    this.title = title;
-    this.company = company;
-    this.address = address;
-    this.home = home;
-    this.mobile = mobile;
-    this.work = work;
-    this.fax = fax;
-    this.email = email;
-    this.group = group;
-  }
+
 
   @Override
   public boolean equals(Object o) {
@@ -49,23 +34,6 @@ public class RegisterData {
   @Override
   public int hashCode() {
     return Objects.hash(id, name, last);
-  }
-
-  public RegisterData(String name, String middle, String last, String nick, String title, String company, String address, String home, String mobile, String work, String fax, String email, String group) {
-    this.id = 0;
-    this.name = name;
-    this.middle = middle;
-    this.last = last;
-    this.nick = nick;
-    this.title = title;
-    this.company = company;
-    this.address = address;
-    this.home = home;
-    this.mobile = mobile;
-    this.work = work;
-    this.fax = fax;
-    this.email = email;
-    this.group = group;
   }
 
   public int getId() {
@@ -133,7 +101,73 @@ public class RegisterData {
     return group;
   }
 
-  public void setId(int id) {
+  public RegisterData withId(int id) {
     this.id = id;
+    return this;
+  }
+
+  public RegisterData withName(String name) {
+    this.name = name;
+    return this;
+  }
+
+  public RegisterData withMiddle(String middle) {
+    this.middle = middle;
+    return this;
+  }
+
+  public RegisterData withLast(String last) {
+    this.last = last;
+    return this;
+  }
+
+  public RegisterData withNick(String nick) {
+    this.nick = nick;
+    return this;
+  }
+
+  public RegisterData withTitle(String title) {
+    this.title = title;
+    return this;
+  }
+
+  public RegisterData withCompany(String company) {
+    this.company = company;
+    return this;
+  }
+
+  public RegisterData withAddress(String address) {
+    this.address = address;
+    return this;
+  }
+
+  public RegisterData withHome(String home) {
+    this.home = home;
+    return this;
+  }
+
+  public RegisterData withMobile(String mobile) {
+    this.mobile = mobile;
+    return this;
+  }
+
+  public RegisterData withWork(String work) {
+    this.work = work;
+    return this;
+  }
+
+  public RegisterData withFax(String fax) {
+    this.fax = fax;
+    return this;
+  }
+
+  public RegisterData withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public RegisterData withGroup(String group) {
+    this.group = group;
+    return this;
   }
 }

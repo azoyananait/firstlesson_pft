@@ -140,8 +140,8 @@ public class ContactHelper extends NavigationHelper {
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
       String lastName = element.findElement(By.xpath("td[2]")).getText();
       String firstName = element.findElement(By.xpath("td[3]")).getText();
-      RegisterData contact = new RegisterData(id, firstName, "Test12", lastName, "Test4", "Test5", "Test6", "Test7", "Test8", "Test9", "Test10", "Test11", "Test@mail.ru", "test1");
-      contacts.add(contact);
+      contacts.add(new RegisterData()
+              .withId(id).withName("Test1").withMiddle("Test2").withLast("Test3").withNick("Test4").withTitle("Test5").withCompany("Test6").withAddress("Test7").withHome("Test8").withMobile("Test9").withWork("Test10").withFax("Test11").withEmail("Test@mail.ru").withGroup("test1"));
     }
     return contacts;
   }
