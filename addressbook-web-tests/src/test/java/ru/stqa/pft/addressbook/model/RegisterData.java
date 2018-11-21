@@ -3,7 +3,7 @@ package ru.stqa.pft.addressbook.model;
 import java.util.Objects;
 
 public class RegisterData {
-  private int id = 0;
+  private int id = Integer.MAX_VALUE;
   private  String name;
   private  String middle;
   private  String last;
@@ -17,8 +17,6 @@ public class RegisterData {
   private  String fax;
   private  String email;
   private  String group;
-
-
 
 
   @Override

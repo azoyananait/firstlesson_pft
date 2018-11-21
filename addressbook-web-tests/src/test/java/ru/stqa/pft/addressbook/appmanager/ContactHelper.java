@@ -6,10 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.RegisterData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends NavigationHelper {
 
@@ -43,98 +45,66 @@ public class ContactHelper extends NavigationHelper {
     }
   }
 
-  /**
-   *
-   * @param i
-   */
-  public void editContact(int i) {
-    wd.findElements(By.name("entry")).get(i).findElement(By.xpath("td[8]")).click();
+  private void editContactById(int id) {
+    wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
   }
 
-  /**
-   *
-   */
   public void addContact(){
     click(By.xpath("(//input[@value='Enter'])"));
   }
 
-  /**
-   *
-   */
   public void updateContact(){
     click(By.xpath("//input[@value='Update']"));
   }
 
-  /**
-   *
-   */
   public void deleteContact(){
     click(By.xpath("//input[@value='Delete']"));
   }
 
-  /**
-   *
-   * @param index
-   */
-  public void selectContact(int index){
-    wd.findElements(By.name("selected[]")).get(index).click();
+  public void selectContactById(int id){
+    wd.findElement(By.xpath("//table[@id='maintable']//input[@value='" + id + "']")).click();;
   }
 
-  /**
-   *
-   */
   public void checkAlert(){
     Alert alert = wd.switchTo().alert();
     alert.accept();
   }
 
-  /**
-   *
-   * @param locator
-   * @param text
-   */
   private void fill(By locator, String text){
     click(locator);
     wd.findElement(locator).clear();
     wd.findElement(locator).sendKeys(text);
   }
-  /**
-   * Создания контакта, если не существует ни одного
-   * @param registerData данные для регистрации контакта
-   */
+
   public void create(RegisterData registerData){
     gotoAddNewPage();
     fillContactForm(registerData, true);
     addContact();
     goToHomePage();
   }
-  public void modifyContact(int index, RegisterData modificationData) {
-   editContact(index);
+  public void modify(RegisterData modificationData) {
+   editContactById(modificationData.getId());
    fillContactForm(modificationData, false);
     updateContact();
     goToHomePage();
   }
-  public void delete(int index) {
-    selectContact(index);
+
+  public void delete(RegisterData contact) {
+    selectContactById(contact.getId());
     deleteContact();
     checkAlert();
     goToHomePage();
+
   }
 
-  /**
-   *
-   * @return
-   */
   public int count() {
+
     return wd.findElements(By.name("selected[]")).size();
   }
 
-  /**
-   *
-   * @return
-   */
-  public List<RegisterData> list() {
-    List<RegisterData> contacts = new ArrayList<>();
+
+  public Contacts all() {
+    Contacts contacts = new Contacts();
     List<WebElement> elements = wd.findElements(By.name("entry"));
     for (WebElement element: elements) {
       int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
