@@ -22,14 +22,12 @@ public class GroupTests extends TestBase {
 
   @Test
   public void testGroupCreation() {
+    app.group().cleanCache();
     app.group().goToGroupPage();
     Groups before = app.group().all();
-    app.group().newGroup();
-    app.group().fillGroupForm(registrationData);
-    app.group().addGroup();
-    app.group().returnToGroupPage();
+    app.group().create(registrationData);
     Groups after = app.group().all();
-    assertThat(after.size(), equalTo(before.size() + 1));
+    assertEquals(after.size(), before.size() + 1);
 
     assertThat(after, equalTo(
             before.withAdded(registrationData.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
@@ -37,6 +35,7 @@ public class GroupTests extends TestBase {
 
   @Test
   public void testGroupModification() {
+    app.group().cleanCache();
     Groups before = app.group().all();
     GroupData modifiedGroup = before.iterator().next();
     GroupData group = new GroupData()
@@ -50,13 +49,13 @@ public class GroupTests extends TestBase {
 
   @Test
   public void testGroupDeletionTests() {
+    app.group().cleanCache();
     Groups before = app.group().all();
     GroupData deletedGroup = before.iterator().next();
     app.group().delete(deletedGroup);
     Groups after = app.group().all();
     assertEquals(after.size(), before.size() - 1);
     assertThat(after, equalTo(before.without(deletedGroup)));
-
   }
 
 }
