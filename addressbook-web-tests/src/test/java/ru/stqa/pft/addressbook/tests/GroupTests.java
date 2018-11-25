@@ -26,11 +26,24 @@ public class GroupTests extends TestBase {
     app.group().goToGroupPage();
     Groups before = app.group().all();
     app.group().create(registrationData);
+    assertEquals(app.group().count(), before.size() + 1);
     Groups after = app.group().all();
-    assertEquals(after.size(), before.size() + 1);
+
 
     assertThat(after, equalTo(
             before.withAdded(registrationData.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+  }
+  @Test
+  public void testBadGroupCreation() {
+    app.group().cleanCache();
+    app.group().goToGroupPage();
+    Groups before = app.group().all();
+    GroupData group = new GroupData().withName("test'");
+    app.group().create(group);
+    assertThat(app.group().count(), equalTo(before.size()));
+    Groups after = app.group().all();
+    assertThat(after, equalTo(before));
+
   }
 
   @Test
@@ -41,8 +54,8 @@ public class GroupTests extends TestBase {
     GroupData group = new GroupData()
             .withId(modifiedGroup.getId()).withName("test1").withHeader("test2").withFooter("test3");
     app.group().modify(group);
+    assertEquals(app.group().count(), before.size());
     Groups after = app.group().all();
-    assertEquals(after.size(), before.size());
 
     assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
   }
@@ -53,8 +66,8 @@ public class GroupTests extends TestBase {
     Groups before = app.group().all();
     GroupData deletedGroup = before.iterator().next();
     app.group().delete(deletedGroup);
+    assertEquals(app.group().count(), before.size() - 1);
     Groups after = app.group().all();
-    assertEquals(after.size(), before.size() - 1);
     assertThat(after, equalTo(before.without(deletedGroup)));
   }
 

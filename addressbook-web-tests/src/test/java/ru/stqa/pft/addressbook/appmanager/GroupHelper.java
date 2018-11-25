@@ -74,6 +74,9 @@ public class GroupHelper extends NavigationHelper {
     returnToGroupPage();
     cleanCache();
   }
+  public int count() {
+    return wd.findElements(By.name("selected[]")).size();
+  }
 
   public Groups all() {
     if (groupCache != null){
