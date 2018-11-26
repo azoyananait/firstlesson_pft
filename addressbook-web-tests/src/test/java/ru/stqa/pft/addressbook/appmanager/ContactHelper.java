@@ -94,26 +94,62 @@ public class ContactHelper extends NavigationHelper {
     deleteContact();
     checkAlert();
     goToHomePage();
-
   }
 
   public int count() {
-
     return wd.findElements(By.name("selected[]")).size();
   }
 
 
   public Contacts all() {
     Contacts contacts = new Contacts();
-    List<WebElement> elements = wd.findElements(By.name("entry"));
-    for (WebElement element: elements) {
-      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-      String lastName = element.findElement(By.xpath("td[2]")).getText();
-      String firstName = element.findElement(By.xpath("td[3]")).getText();
-      contacts.add(new RegisterData()
-              .withId(id).withName("Test1").withMiddle("Test2").withLast("Test3").withNick("Test4").withTitle("Test5").withCompany("Test6").withAddress("Test7").withHome("Test8").withMobile("Test9").withWork("Test10").withFax("Test11").withEmail("Test@mail.ru").withGroup("test1"));
+    List<WebElement> elements = wd.findElements(By.cssSelector("tr[name='entry']"));
+    for (WebElement element : elements) {
+      List<WebElement> columns = element.findElements(By.cssSelector("td"));
+      String lastName = columns.get(1).getText();
+      String firstName = columns.get(2).getText();
+      String allAddresses = columns.get(3).getText();
+      String allEmails = columns.get(4).getText();
+      String allPhones = columns.get(5).getText();
+      int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+      contacts.add(new RegisterData().withId(id).withName(firstName).withLast(lastName).withAllAddresses(allAddresses)
+              .setAllEmails(allEmails).withAllPhones(allPhones));
     }
-    return contacts;
+      return contacts;
   }
 
+  public RegisterData infoFromEditForm(RegisterData modifiedContact){
+    initContactModificationById(modifiedContact.getId());
+    String name = wd.findElement(By.name("firstname")).getAttribute("value");
+    String last = wd.findElement(By.name("lastname")).getAttribute("value");
+    String home = wd.findElement(By.name("home")).getAttribute("value");
+    String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+    String work = wd.findElement(By.name("work")).getAttribute("value");
+    String email = wd.findElement(By.name("email")).getAttribute("value");
+    String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+    String email3 = wd.findElement(By.name("email3")).getAttribute("value");
+    String address = wd.findElement(By.name("address")).getAttribute("value");
+    String address2 = wd.findElement(By.name("address2")).getAttribute("value");
+    wd.navigate().back();
+    return new RegisterData().withId(modifiedContact.getId())
+                            .withName(name)
+                            .withLast(last)
+                            .withHome(home)
+                            .withMobile(mobile)
+                            .withWork(work)
+                            .withEmail(email)
+                            .withContactEmail2(email2)
+                            .withContactEmail3(email3)
+                            .withAddress(address)
+                            .withSecondaryAddress(address2);
+  }
+
+
+  private void initContactModificationById ( int id){
+    WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id)));
+    WebElement row = checkbox.findElement(By.xpath("./../.."));
+    List<WebElement> cells = row.findElements(By.tagName("td"));
+    cells.get(7).findElement(By.tagName("a")).click();
+
+  }
 }

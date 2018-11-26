@@ -11,12 +11,18 @@ public class RegisterData {
   private  String title;
   private  String company;
   private  String address;
+  private  String address2;
   private  String home;
   private  String mobile;
   private  String work;
   private  String fax;
-  private  String email;
+  private String allPhones;
+  private String email;
+  private String contactEmail2;
+  private String contactEmail3;
+  private String allEmails;
   private  String group;
+  private String allAddresses;
 
 
   @Override
@@ -75,9 +81,11 @@ public class RegisterData {
     return address;
   }
 
-  public String getHome() {
-    return home;
+  public String getSecondaryAddress() {
+    return address2;
   }
+
+  public String getHome() { return home; }
 
   public String getMobile() {
     return mobile;
@@ -95,8 +103,24 @@ public class RegisterData {
     return email;
   }
 
+  public String getEmail2() { return contactEmail2; }
+
+  public String getEmail3() { return contactEmail3; }
+
+  public String getAllEmails() { return allEmails; }
+
+  public String getAllPhones() { return allPhones; }
+
+  public String getAllAddresses() { return allAddresses;}
+
   public String getGroup() {
     return group;
+  }
+
+
+  public RegisterData withAllPhones(String allPhones) {
+    this.allPhones = allPhones;
+    return this;
   }
 
   public RegisterData withId(int id) {
@@ -139,6 +163,11 @@ public class RegisterData {
     return this;
   }
 
+  public RegisterData withSecondaryAddress(String address2){
+    this.address2 = address2;
+    return this;
+  }
+
   public RegisterData withHome(String home) {
     this.home = home;
     return this;
@@ -168,4 +197,23 @@ public class RegisterData {
     this.group = group;
     return this;
   }
+  public RegisterData withContactEmail2(String contactEmail2) {
+    this.contactEmail2 = contactEmail2;
+    return this;
+  }
+
+  public RegisterData withContactEmail3(String contactEmail3) {
+    this.contactEmail3 = contactEmail3;
+    return this;
+  }
+
+  public RegisterData setAllEmails(String allEmails) {
+    this.allEmails = allEmails;
+    return this;
+  }
+  public RegisterData withAllAddresses(String allAddresses) {
+    this.allAddresses = allAddresses;
+    return this;
+  }
+
 }
