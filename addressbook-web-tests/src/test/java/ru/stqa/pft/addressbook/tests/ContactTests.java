@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.RegisterData;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -13,7 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 
 public class ContactTests extends TestBase {
-  private RegisterData registerData = new RegisterData().withName("Test1").withMiddle("Test2").withLast("Test3").withNick("Test4").withTitle("Test5").withCompany("Test6").withAddress("Test7").withHome("Test8").withMobile("Test9").withWork("Test10").withFax("Test11").withEmail("Test@mail.ru").withGroup("test1");
+  private RegisterData registerData = new RegisterData().withName("Test1").withMiddle("Test2").withLast("Test3").withNick("Test4").withTitle("Test5").withCompany("Test6").withAddress("Test7").withHome("Test8").withMobile("Test9").withWork("Test10").withFax("Test11").withEmail("Test@mail.ru").withGroup("test").withPhoto(new File("src/test/resources/stru.png"));
   private RegisterData modificationData = new RegisterData().withName("ModifiedName").withMiddle("ModifiedMiddleName").withLast("ModifiedLastName").withNick("ModifiedNick").withTitle("ModifiedTitle").withCompany("ModifiedCompany").withAddress("ModifiedAddress").withHome("ModifiedHome").withMobile("ModifiedMobile").withWork("ModifiedWork").withFax("ModifiedFax").withEmail("ModifiedEmail@mail.ru").withGroup("ModifiedGroup");
 
   @BeforeMethod
@@ -37,6 +38,7 @@ public class ContactTests extends TestBase {
     assertThat(after, equalTo(
             before.withAdded(registerData.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
   }
+
 
   @Test
   public void testContactModification() {

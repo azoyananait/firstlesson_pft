@@ -9,6 +9,7 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.RegisterData;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -37,6 +38,7 @@ public class ContactHelper extends NavigationHelper {
     fill(By.name("work"), registerData.getWork());
     fill(By.name("fax"), registerData.getFax());
     fill(By.name("email"), registerData.getEmail());
+    attach(By.name("photo"), registerData.getPhoto());
 
     if(isRegistration){
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(registerData.getGroup());
@@ -70,10 +72,13 @@ public class ContactHelper extends NavigationHelper {
     alert.accept();
   }
 
-  private void fill(By locator, String text){
+ private void fill(By locator, String text){
     click(locator);
     wd.findElement(locator).clear();
     wd.findElement(locator).sendKeys(text);
+  }
+ private void attach(By locator, File file){
+    wd.findElement(locator).sendKeys(file.getAbsolutePath());
   }
 
   public void create(RegisterData registerData){

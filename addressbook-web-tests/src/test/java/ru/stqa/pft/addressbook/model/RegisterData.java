@@ -1,5 +1,6 @@
 package ru.stqa.pft.addressbook.model;
 
+import java.io.File;
 import java.util.Objects;
 
 public class RegisterData {
@@ -16,13 +17,14 @@ public class RegisterData {
   private  String mobile;
   private  String work;
   private  String fax;
-  private String allPhones;
-  private String email;
-  private String contactEmail2;
-  private String contactEmail3;
-  private String allEmails;
+  private  String allPhones;
+  private  String email;
+  private  String contactEmail2;
+  private  String contactEmail3;
+  private  String allEmails;
   private  String group;
-  private String allAddresses;
+  private  String allAddresses;
+  private  File photo;
 
 
   @Override
@@ -116,6 +118,8 @@ public class RegisterData {
   public String getGroup() {
     return group;
   }
+
+  public File getPhoto() { return photo; }
 
 
   public RegisterData withAllPhones(String allPhones) {
@@ -213,6 +217,10 @@ public class RegisterData {
   }
   public RegisterData withAllAddresses(String allAddresses) {
     this.allAddresses = allAddresses;
+    return this;
+  }
+  public RegisterData withPhoto(File photo) {
+    this.photo = photo;
     return this;
   }
 
