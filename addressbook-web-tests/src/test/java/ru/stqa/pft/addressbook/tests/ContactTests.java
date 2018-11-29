@@ -1,12 +1,22 @@
 package ru.stqa.pft.addressbook.tests;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.RegisterData;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -24,9 +34,59 @@ public class ContactTests extends TestBase {
       app.contact().create(registerData);
     }
   }
+  @DataProvider
+  public Iterator<Object[]> validContactsCsv() throws IOException {
+    List<Object[]> list = new ArrayList<Object[]>();
+    //open file for reading
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contact.csv")))) {
+      //BufferedReader allows to read the whole row from file (method readLine)
+      String line = reader.readLine();
+      while (line != null) {
+        String[] split = line.split(";"); //to cut row by ;-separator
+        list.add(new Object[]{new RegisterData().withName(split[0]).withLast(split[1]).withNick(split[2])
+                .withCompany(split[3]).withAddress(split[4]).withMobile(split[5]).withEmail(split[6]).withGroup(split[7])});
+        line = reader.readLine();
+      }
+      return list.iterator();
+    }
+  }
 
-  @Test
-  public void testRegistration() {
+  @DataProvider
+  public Iterator<Object[]> validContactsXml() throws IOException {
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contact.xml")))) {
+      String xml = "";
+      String line = reader.readLine();
+      while (line != null) {
+        xml += line;
+        line = reader.readLine();
+      }
+      XStream xStream = new XStream();
+      xStream.processAnnotations(RegisterData.class);
+      List<RegisterData> contacts = (List<RegisterData>) xStream.fromXML(xml);
+      return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
+
+    }
+  }
+
+  @DataProvider
+  public Iterator<Object[]> validContactsJson() throws IOException {
+    try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/contact.json")))) {
+      String json = "";
+      String line = reader.readLine();
+      while (line != null) {
+        json += line;
+        line = reader.readLine();
+      }
+      Gson gson = new Gson();
+      List<RegisterData> contacts = gson.fromJson(json, new TypeToken<List<RegisterData>>() {
+      }.getType());
+      return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
+
+    }
+  }
+
+  @Test(dataProvider = "validContactsXml")
+  public void testRegistration(RegisterData contact) {
     Contacts before = app.contact().all();
     app.contact().gotoAddNewPage();
     app.contact().fillContactForm(registerData, true);

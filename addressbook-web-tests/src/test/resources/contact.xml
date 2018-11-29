@@ -1,0 +1,35 @@
+<list>
+  <ru.stqa.pft.addressbook.model.RegisterData>
+    <id>2147483647</id>
+    <name>Azoyan 0</name>
+    <middle>tester 0</middle>
+    <last>testerov 0</last>
+    <company>Testerik 0</company>
+    <address>Test 0</address>
+    <mobile>+1234567890</mobile>
+    <email>test0@mail.com</email>
+    <group>group 0</group>
+  </ru.stqa.pft.addressbook.model.RegisterData>
+  <ru.stqa.pft.addressbook.model.RegisterData>
+    <id>2147483647</id>
+    <name>Azoyan 1</name>
+    <middle>tester 1</middle>
+    <last>testerov 1</last>
+    <company>Testerik 1</company>
+    <address>Test 1</address>
+    <mobile>+1234567891</mobile>
+    <email>test1@mail.com</email>
+    <group>group 1</group>
+  </ru.stqa.pft.addressbook.model.RegisterData>
+  <ru.stqa.pft.addressbook.model.RegisterData>
+    <id>2147483647</id>
+    <name>Azoyan 2</name>
+    <middle>tester 2</middle>
+    <last>testerov 2</last>
+    <company>Testerik 2</company>
+    <address>Test 2</address>
+    <mobile>+1234567892</mobile>
+    <email>test2@mail.com</email>
+    <group>group 2</group>
+  </ru.stqa.pft.addressbook.model.RegisterData>
+</list>
