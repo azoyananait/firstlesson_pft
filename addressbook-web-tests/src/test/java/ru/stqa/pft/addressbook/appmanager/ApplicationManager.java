@@ -35,6 +35,8 @@ public class ApplicationManager{
     String target = System.getProperty("target", "local");
     properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
+    dbHelper = new DbHelper();
+
 
     if(browser.equals(BrowserType.SAFARI)){
       wd = new SafariDriver();
@@ -55,7 +57,6 @@ public class ApplicationManager{
     sessionHelper.login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
     contactHelper = new ContactHelper(wd);
 
-    dbHelper = new DbHelper();
   }
 
   public void stop () {
@@ -74,7 +75,5 @@ public class ApplicationManager{
     return contactHelper;
   }
 
-  public DbHelper db() {
-    return dbHelper;
-  }
+  public DbHelper db() { return dbHelper; }
 }

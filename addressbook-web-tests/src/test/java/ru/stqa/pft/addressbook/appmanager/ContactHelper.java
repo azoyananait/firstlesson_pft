@@ -38,7 +38,7 @@ public class ContactHelper extends NavigationHelper {
     fill(By.name("work"), registerData.getWork());
     fill(By.name("fax"), registerData.getFax());
     fill(By.name("email"), registerData.getEmail());
-    attach(By.name("photo"), registerData.getPhoto());
+    //attach(By.name("photo"), registerData.getPhoto());
 
     if(isRegistration){
       new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(registerData.getGroup());

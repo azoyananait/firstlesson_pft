@@ -30,7 +30,7 @@ public class ContactTests extends TestBase {
   @BeforeMethod
   public void ensurePreconditions() {
     app.contact().goToHomePage();
-    if (app.contact().count() == 0) {
+    if (app.db().contacts().size() == 0) {
       app.contact().create(registerData);
     }
   }
@@ -87,12 +87,12 @@ public class ContactTests extends TestBase {
 
   @Test(dataProvider = "validContactsXml")
   public void testRegistration(RegisterData contact) {
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     app.contact().gotoAddNewPage();
     app.contact().fillContactForm(registerData, true);
     app.contact().addContact();
     app.contact().goToHomePage();
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after.size(), equalTo(before.size() + 1));
 
     assertThat(after, equalTo(
@@ -102,13 +102,12 @@ public class ContactTests extends TestBase {
 
   @Test
   public void testContactModification() {
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     RegisterData modifiedContact = before.iterator().next();
-
     modificationData.withId(modifiedContact.getId());
     app.contact().modify(modificationData);
     assertThat(app.contact().count(), equalTo(before.size()));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
 
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(modificationData)));
 
@@ -116,10 +115,10 @@ public class ContactTests extends TestBase {
 
   @Test
   public void testContactDelete() {
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     RegisterData deletedContact = before.iterator().next();
     app.contact().delete(deletedContact);
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertEquals(after.size(), before.size() - 1);
 
     assertThat(after, equalTo(before.without(deletedContact)));

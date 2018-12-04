@@ -1,16 +1,18 @@
 package ru.stqa.pft.addressbook.model;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 
-
+@XStreamAlias("contact")
 @Entity
 @Table(name  = "addressbook")
 public class RegisterData {
-
+  @XStreamOmitField()
   @Id
   @Column(name = "id")
   private int id = Integer.MAX_VALUE;
@@ -130,9 +132,7 @@ public class RegisterData {
     return address;
   }
 
-  public String getSecondaryAddress() {
-    return address2;
-  }
+  public String getSecondaryAddress() { return address2;}
 
   public String getHome() { return home; }
 
