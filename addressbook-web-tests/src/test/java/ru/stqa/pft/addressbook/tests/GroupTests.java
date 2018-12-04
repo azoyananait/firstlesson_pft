@@ -3,8 +3,6 @@ package ru.stqa.pft.addressbook.tests;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thoughtworks.xstream.XStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -30,8 +28,8 @@ public class GroupTests extends TestBase {
 
   @BeforeMethod
   public void ensurePreconditions(){
-    app.group().goToGroupPage();
-    if(app.group().all().size() == 0) {
+    if (app.db().groups().size()==0) {
+      app.group().goToGroupPage();
       app.group().create(registrationData);
     }
   }
@@ -103,13 +101,14 @@ public class GroupTests extends TestBase {
   @Test
   public void testGroupModification() {
     app.group().cleanCache();
-    Groups before = app.group().all();
+    Groups before = app.db().groups();
     GroupData modifiedGroup = before.iterator().next();
     GroupData group = new GroupData()
             .withId(modifiedGroup.getId()).withName("test1").withHeader("test2").withFooter("test3");
+    app.group().goToGroupPage();
     app.group().modify(group);
     assertEquals(app.group().count(), before.size());
-    Groups after = app.group().all();
+    Groups after = app.db().groups();
 
     assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
   }
