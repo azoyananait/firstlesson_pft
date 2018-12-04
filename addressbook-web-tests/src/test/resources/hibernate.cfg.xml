@@ -28,6 +28,7 @@
 
 
         <mapping class="ru.stqa.pft.addressbook.model.GroupData"/>
+        <mapping class="ru.stqa.pft.addressbook.model.RegisterData"/>
 
     </session-factory>
 

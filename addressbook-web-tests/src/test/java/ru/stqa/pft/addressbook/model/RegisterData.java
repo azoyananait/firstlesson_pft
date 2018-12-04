@@ -1,30 +1,86 @@
 package ru.stqa.pft.addressbook.model;
 
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 
+
+@Entity
+@Table(name  = "addressbook")
 public class RegisterData {
+
+  @Id
+  @Column(name = "id")
   private int id = Integer.MAX_VALUE;
+
+  @Column(name = "firstname")
   private  String name;
-  private  String middle;
+
+  @Column(name = "lastname")
   private  String last;
+
+  @Column(name = "middlename")
+  private  String middle;
+
+  @Column(name = "nickname")
   private  String nick;
+
+  @Column(name = "title")
   private  String title;
+
+  @Column(name = "company")
   private  String company;
+
+  @Column(name = "address")
+  @Type(type =  "text")
   private  String address;
+
+  @Column(name = "addr_long")
+  @Type(type =  "text")
   private  String address2;
+
+  @Column(name = "home")
+  @Type(type =  "text")
   private  String home;
+
+  @Column(name = "mobile")
+  @Type(type =  "text")
   private  String mobile;
+
+  @Column(name = "work")
+  @Type(type =  "text")
   private  String work;
+
+  @Column(name = "fax")
+  @Type(type =  "text")
   private  String fax;
-  private  String allPhones;
+
+  @Column(name = "email")
+  @Type(type =  "text")
   private  String email;
+
+  @Column(name = "email2")
+  @Type(type =  "text")
   private  String contactEmail2;
+
+  @Column(name = "email3")
+  @Type(type =  "text")
   private  String contactEmail3;
-  private  String allEmails;
+
+  @Column(name = "photo")
+  @Type(type =  "text")
+  private  String photo;
+
+  @Transient
   private  String group;
+  @Transient
   private  String allAddresses;
-  private  File photo;
+  @Transient
+  private  String allPhones;
+  @Transient
+  private  String allEmails;
 
 
   @Override
@@ -44,15 +100,6 @@ public class RegisterData {
 
   public int getId() {
     return id;
-  }
-
-  @Override
-  public String toString() {
-    return "RegisterData{" +
-            "id='" + id + '\'' +
-            ", name='" + name + '\'' +
-            ", last='" + last + '\'' +
-            '}';
   }
 
   public String getName() {
@@ -119,7 +166,7 @@ public class RegisterData {
     return group;
   }
 
-  public File getPhoto() { return photo; }
+  public File getPhoto() { return new File(photo); }
 
 
   public RegisterData withAllPhones(String allPhones) {
@@ -220,8 +267,16 @@ public class RegisterData {
     return this;
   }
   public RegisterData withPhoto(File photo) {
-    this.photo = photo;
+    this.photo = photo.getPath();
     return this;
   }
 
+  @Override
+  public String toString() {
+    return "RegisterData{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", last='" + last + '\'' +
+            '}';
+  }
 }

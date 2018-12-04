@@ -8,6 +8,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.RegisterData;
+
 import java.util.List;
 
 public class HbConnectionTest {
@@ -41,5 +43,20 @@ public class HbConnectionTest {
     }
     session.getTransaction().commit();
     session.close();
+  }
+  @Test
+  public void hbConnectionForContacts()  {
+
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    List<RegisterData> result = session.createQuery("from RegisterData where deprecated = '0000-00-00'").list();
+
+    session.getTransaction().commit();
+    session.close();
+
+    for (RegisterData contact : result) {
+      System.out.println(contact);
+      System.out.println(contact.getGroup());
+    }
   }
 }
