@@ -85,21 +85,6 @@ public class RegisterData {
   private  String allEmails;
 
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    RegisterData that = (RegisterData) o;
-    return id == that.id &&
-            Objects.equals(name, that.name) &&
-            Objects.equals(last, that.last);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, name, last);
-  }
-
   public int getId() {
     return id;
   }
@@ -262,6 +247,7 @@ public class RegisterData {
     this.allEmails = allEmails;
     return this;
   }
+
   public RegisterData withAllAddresses(String allAddresses) {
     this.allAddresses = allAddresses;
     return this;
@@ -272,11 +258,54 @@ public class RegisterData {
   }
 
   @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    RegisterData that = (RegisterData) o;
+    return id == that.id &&
+            Objects.equals(name, that.name) &&
+            Objects.equals(last, that.last) &&
+            Objects.equals(middle, that.middle) &&
+            Objects.equals(nick, that.nick) &&
+            Objects.equals(title, that.title) &&
+            Objects.equals(company, that.company) &&
+            Objects.equals(address, that.address) &&
+            Objects.equals(address2, that.address2) &&
+            Objects.equals(home, that.home) &&
+            Objects.equals(mobile, that.mobile) &&
+            Objects.equals(work, that.work) &&
+            Objects.equals(fax, that.fax) &&
+            Objects.equals(email, that.email) &&
+            Objects.equals(contactEmail2, that.contactEmail2) &&
+            Objects.equals(contactEmail3, that.contactEmail3) &&
+            Objects.equals(group, that.group);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, last, middle, nick, title, company, address, address2, home, mobile, work, fax, email, contactEmail2, contactEmail3, group);
+  }
+
+  @Override
   public String toString() {
     return "RegisterData{" +
             "id=" + id +
             ", name='" + name + '\'' +
             ", last='" + last + '\'' +
+            ", middle='" + middle + '\'' +
+            ", nick='" + nick + '\'' +
+            ", title='" + title + '\'' +
+            ", company='" + company + '\'' +
+            ", address='" + address + '\'' +
+            ", address2='" + address2 + '\'' +
+            ", home='" + home + '\'' +
+            ", mobile='" + mobile + '\'' +
+            ", work='" + work + '\'' +
+            ", fax='" + fax + '\'' +
+            ", email='" + email + '\'' +
+            ", contactEmail2='" + contactEmail2 + '\'' +
+            ", contactEmail3='" + contactEmail3 + '\'' +
+            ", group='" + group + '\'' +
             '}';
   }
 }
