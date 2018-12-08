@@ -41,7 +41,7 @@ public class ContactHelper extends NavigationHelper {
     //attach(By.name("photo"), registerData.getPhoto());
 
     if(isRegistration){
-      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(registerData.getGroup());
+      new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");
     }else{
       Assert.assertFalse(isElementPresent(By.name("new_group")));
     }

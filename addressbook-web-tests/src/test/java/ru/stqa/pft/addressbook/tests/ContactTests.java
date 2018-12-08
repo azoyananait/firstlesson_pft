@@ -24,8 +24,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 
 public class ContactTests extends TestBase {
-  private RegisterData registerData = new RegisterData().withName("Test1").withMiddle("Test2").withLast("Test3").withNick("Test4").withTitle("Test5").withCompany("Test6").withAddress("Test7").withHome("Test8").withMobile("Test9").withWork("Test10").withFax("Test11").withEmail("Test@mail.ru").withGroup("test").withPhoto(new File("src/test/resources/stru.png"));
-  private RegisterData modificationData = new RegisterData().withName("ModifiedName").withMiddle("ModifiedMiddleName").withLast("ModifiedLastName").withNick("ModifiedNick").withTitle("ModifiedTitle").withCompany("ModifiedCompany").withAddress("ModifiedAddress").withHome("ModifiedHome").withMobile("ModifiedMobile").withWork("ModifiedWork").withFax("ModifiedFax").withEmail("ModifiedEmail@mail.ru").withGroup("ModifiedGroup");
+  private RegisterData registerData = new RegisterData().withName("Test1").withMiddle("Test2").withLast("Test3").withNick("Test4").withTitle("Test5").withCompany("Test6").withAddress("Test7").withHome("Test8").withMobile("Test9").withWork("Test10").withFax("Test11").withEmail("Test@mail.ru").withPhoto(new File("src/test/resources/stru.png"));
+  private RegisterData modificationData = new RegisterData().withName("ModifiedName").withMiddle("ModifiedMiddleName").withLast("ModifiedLastName").withNick("ModifiedNick").withTitle("ModifiedTitle").withCompany("ModifiedCompany").withAddress("ModifiedAddress").withHome("ModifiedHome").withMobile("ModifiedMobile").withWork("ModifiedWork").withFax("ModifiedFax").withEmail("ModifiedEmail@mail.ru");
 
   @BeforeMethod
   public void ensurePreconditions() {
@@ -44,7 +44,7 @@ public class ContactTests extends TestBase {
       while (line != null) {
         String[] split = line.split(";"); //to cut row by ;-separator
         list.add(new Object[]{new RegisterData().withName(split[0]).withLast(split[1]).withNick(split[2])
-                .withCompany(split[3]).withAddress(split[4]).withMobile(split[5]).withEmail(split[6]).withGroup(split[7])});
+                .withCompany(split[3]).withAddress(split[4]).withMobile(split[5]).withEmail(split[6])});
         line = reader.readLine();
       }
       return list.iterator();

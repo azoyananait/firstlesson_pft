@@ -6,7 +6,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @XStreamAlias("contact")
 @Entity
@@ -75,14 +77,19 @@ public class RegisterData {
   @Type(type =  "text")
   private  String photo;
 
-  @Transient
-  private  String group;
+
   @Transient
   private  String allAddresses;
   @Transient
   private  String allPhones;
   @Transient
   private  String allEmails;
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "address_in_groups",
+          joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<>();
+
 
 
   public int getId() {
@@ -147,8 +154,8 @@ public class RegisterData {
 
   public String getAllAddresses() { return allAddresses;}
 
-  public String getGroup() {
-    return group;
+  public Groups getGroups() {
+    return new Groups(groups);
   }
 
   public File getPhoto() { return new File(photo); }
@@ -229,10 +236,6 @@ public class RegisterData {
     return this;
   }
 
-  public RegisterData withGroup(String group) {
-    this.group = group;
-    return this;
-  }
   public RegisterData withContactEmail2(String contactEmail2) {
     this.contactEmail2 = contactEmail2;
     return this;
@@ -277,13 +280,12 @@ public class RegisterData {
             Objects.equals(fax, that.fax) &&
             Objects.equals(email, that.email) &&
             Objects.equals(contactEmail2, that.contactEmail2) &&
-            Objects.equals(contactEmail3, that.contactEmail3) &&
-            Objects.equals(group, that.group);
+            Objects.equals(contactEmail3, that.contactEmail3);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, last, middle, nick, title, company, address, address2, home, mobile, work, fax, email, contactEmail2, contactEmail3, group);
+    return Objects.hash(id, name, last, middle, nick, title, company, address, address2, home, mobile, work, fax, email, contactEmail2, contactEmail3);
   }
 
   @Override
@@ -305,7 +307,6 @@ public class RegisterData {
             ", email='" + email + '\'' +
             ", contactEmail2='" + contactEmail2 + '\'' +
             ", contactEmail3='" + contactEmail3 + '\'' +
-            ", group='" + group + '\'' +
             '}';
   }
 }
