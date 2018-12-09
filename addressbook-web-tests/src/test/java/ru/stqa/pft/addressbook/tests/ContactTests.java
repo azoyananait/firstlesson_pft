@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.tests;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.thoughtworks.xstream.XStream;
+import org.hamcrest.CoreMatchers;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -24,14 +25,17 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
 
 public class ContactTests extends TestBase {
-  private RegisterData registerData = new RegisterData().withName("Test1").withMiddle("Test2").withLast("Test3").withNick("Test4").withTitle("Test5").withCompany("Test6").withAddress("Test7").withHome("Test8").withMobile("Test9").withWork("Test10").withFax("Test11").withEmail("Test@mail.ru").withPhoto(new File("src/test/resources/stru.png"));
+  File photo = new File("src/test/resources/stru.png");
+  private RegisterData registerData = new RegisterData().withName("Test1").withMiddle("Test2").withLast("Test3").withNick("Test4").withTitle("Test5").withCompany("Test6").withAddress("Test7").withHome("Test8").withMobile("Test9").withWork("Test10").withFax("Test11").withEmail("Test@mail.ru").withPhoto(photo);
   private RegisterData modificationData = new RegisterData().withName("ModifiedName").withMiddle("ModifiedMiddleName").withLast("ModifiedLastName").withNick("ModifiedNick").withTitle("ModifiedTitle").withCompany("ModifiedCompany").withAddress("ModifiedAddress").withHome("ModifiedHome").withMobile("ModifiedMobile").withWork("ModifiedWork").withFax("ModifiedFax").withEmail("ModifiedEmail@mail.ru");
 
   @BeforeMethod
   public void ensurePreconditions() {
+    Contacts contacts = app.db().contacts();
     app.contact().goToHomePage();
     if (app.db().contacts().size() == 0) {
       app.contact().create(registerData);
+      contacts = app.db().contacts();
     }
   }
   @DataProvider
@@ -62,7 +66,7 @@ public class ContactTests extends TestBase {
       }
       XStream xStream = new XStream();
       xStream.processAnnotations(RegisterData.class);
-      List<RegisterData> contacts = (List<RegisterData>) xStream.fromXML(xml);
+      List<RegisterData> contacts = (List<RegisterData>)xStream.fromXML(xml);
       return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
 
     }
@@ -85,18 +89,18 @@ public class ContactTests extends TestBase {
     }
   }
 
-  @Test(dataProvider = "validContactsXml")
+  @Test(dataProvider = "validContactsJson")
   public void testRegistration(RegisterData contact) {
-    Contacts before = app.db().contacts();
     app.contact().gotoAddNewPage();
-    app.contact().fillContactForm(registerData, true);
+    Contacts before = app.db().contacts();
     app.contact().addContact();
     app.contact().goToHomePage();
+    assertThat(app.contact().count(), equalTo(before.size() + 1));
     Contacts after = app.db().contacts();
-    assertThat(after.size(), equalTo(before.size() + 1));
 
     assertThat(after, equalTo(
             before.withAdded(registerData.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+    verifyContactListInUI();
   }
 
 
@@ -109,7 +113,8 @@ public class ContactTests extends TestBase {
     assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.db().contacts();
 
-    assertThat(after, equalTo(before.without(modifiedContact).withAdded(modificationData)));
+    assertThat(after, equalTo(before.without(modifiedContact).withAdded(modifiedContact)));
+    verifyContactListInUI();
 
   }
 
@@ -121,7 +126,8 @@ public class ContactTests extends TestBase {
     Contacts after = app.db().contacts();
     assertEquals(after.size(), before.size() - 1);
 
-    assertThat(after, equalTo(before.without(deletedContact)));
+    assertThat(after, CoreMatchers.equalTo(before.without(deletedContact)));
+    verifyContactListInUI();
   }
 
   @Test

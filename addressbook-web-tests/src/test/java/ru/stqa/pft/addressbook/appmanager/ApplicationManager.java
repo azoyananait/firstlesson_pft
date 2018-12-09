@@ -76,4 +76,5 @@ public class ApplicationManager{
   }
 
   public DbHelper db() { return dbHelper; }
+  public NavigationHelper goTo() { return navigationHelper; }
 }

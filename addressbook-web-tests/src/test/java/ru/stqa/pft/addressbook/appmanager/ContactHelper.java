@@ -150,11 +150,23 @@ public class ContactHelper extends NavigationHelper {
   }
 
 
-  private void initContactModificationById ( int id){
+  private void initContactModificationById ( int id) {
     WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id)));
     WebElement row = checkbox.findElement(By.xpath("./../.."));
     List<WebElement> cells = row.findElements(By.tagName("td"));
     cells.get(7).findElement(By.tagName("a")).click();
 
+  }
+  public void addInGroupById(int id){
+    Select selectGroup = new Select(wd.findElement(By.cssSelector("select[name='to_group']")));
+    selectGroup.selectByValue(Integer.toString(id));
+    click(By.name("add"));
+  }
+  public void findGroupById(int id) {
+    click(By.cssSelector("#right"));
+    click(By.cssSelector("#right>select>option[value='" + id + "']"));
+  }
+  public void removeContactFromGroup(){
+    click(By.cssSelector("input[name='remove']"));
   }
 }

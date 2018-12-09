@@ -309,4 +309,10 @@ public class RegisterData {
             ", contactEmail3='" + contactEmail3 + '\'' +
             '}';
   }
+
+  public RegisterData inGroup (GroupData group){
+    groups.add(group);
+    return this;
+  }
+
 }

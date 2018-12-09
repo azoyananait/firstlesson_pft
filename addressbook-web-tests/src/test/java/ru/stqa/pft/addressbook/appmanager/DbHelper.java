@@ -41,4 +41,14 @@ public class DbHelper {
     session.close();
     return new Contacts(result);
   }
-}
+
+  public Contacts contactById(int contactId) {
+    Session session = sessionFactory.openSession();
+    session.beginTransaction();
+    List<RegisterData> result = session.createQuery("from RegisterData where id=" + contactId).list();
+    session.getTransaction().commit();
+    session.close();
+    return new Contacts(result);
+  }
+  }
+

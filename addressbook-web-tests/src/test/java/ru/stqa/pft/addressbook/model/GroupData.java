@@ -56,7 +56,7 @@ public class GroupData {
   private Set<RegisterData> contacts = new HashSet<RegisterData>();
 
   public Set<RegisterData> getContacts() {
-    return new Contacts();
+    return new Contacts(contacts);
   }
 
   @Override
