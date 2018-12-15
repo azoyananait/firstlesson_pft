@@ -1,6 +1,5 @@
 package ru.stqa.pft.mantis.tests;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -15,27 +14,27 @@ import java.util.List;
 import static org.testng.Assert.assertTrue;
 
 public class ChangePasswordTests extends TestBase {
-  WebDriver wd;
+
   @BeforeMethod
   public void startMailServer() {
     app.mail().start();
   }
+
   @Test
   public void changePasswordTests() throws IOException {
-    String password = "password";
-    Users atStart = app.db().users();
-    UsersData passwordResetedUser = atStart.iterator().next();
-    UsersData userNumber = new UsersData().withId(passwordResetedUser.getId()).withEmail(passwordResetedUser.getEmail()).withUsername(passwordResetedUser.getUsername());
+    String newPassword = "newpassword";
+    Users users = app.db().users();
+    UsersData user = users.iterator().next();
 
     app.session().loginToMantis();
     app.session().goToUsersPage();
-    app.changepass().selectUser(userNumber);
+    app.changepass().selectUser(user);
     app.changepass().resetPassword();
 
     List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
-    String confirmationLink = findConfirmationLink(mailMessages, userNumber.getEmail());
-    app.session().finishRestor(confirmationLink, password);
-    assertTrue(app.newSession().login(userNumber.getUsername(), password));
+    String confirmationLink = findConfirmationLink(mailMessages, user.getEmail());
+    app.session().finishRestore(confirmationLink, newPassword);
+    assertTrue(app.newSession().login(user.getUsername(), newPassword));
   }
 
   private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
@@ -48,4 +47,5 @@ public class ChangePasswordTests extends TestBase {
   public void stopMailServer(){
     app.mail().stop();
   }
+
 }

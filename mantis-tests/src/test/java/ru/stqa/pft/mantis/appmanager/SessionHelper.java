@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 
 public class SessionHelper  extends HelperBase {
   public SessionHelper(ApplicationManager app) {
-
     super(app);
   }
 
@@ -17,18 +16,18 @@ public class SessionHelper  extends HelperBase {
     click(By.cssSelector("input[type='submit']"));
     type(By.name("password"), password);
     click(By.cssSelector("input[type='submit']"));
-
   }
 
   public void goToUsersPage() {
-    wd.get(app.getProperty("web.userURL"));
+    wd.get(app.getProperty("web.baseUrl") + "manage_user_page.php");
   }
 
-  public void finishRestor(String confirmationLink, String password) {
+  public void finishRestore(String confirmationLink, String password) {
     wd.get(confirmationLink);
     type(By.name("password"), password);
     type(By.name("password_confirm"), password);
     click(By.cssSelector("button[type='submit']"));
   }
+
 }
 

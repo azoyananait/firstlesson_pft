@@ -17,6 +17,7 @@ public class ChangePasswordHelper extends HelperBase {
   }
 
   public void resetPassword() {
-    click(By.cssSelector("input[value='Сбросить пароль']"));
+    click(By.cssSelector("input[value='Reset Password']"));
   }
+
 }

@@ -12,10 +12,10 @@ import static org.testng.Assert.assertTrue;
 
 public class RegistrationTests extends TestBase{
 
-  //@BeforeMethod
-  public void startMailServer(){
-    app.mail().start();
-  }
+//  @BeforeMethod
+//  public void startMailServer(){
+//    app.mail().start();
+//  }
 
   @Test
   public void testRegistration() throws IOException, MessagingException {
@@ -23,24 +23,23 @@ public class RegistrationTests extends TestBase{
     String username = String.format("user%s", now);
     String password = "password";
     String email = String.format("user%s@localhost", now);
-    app.james().createUser(username,password);
-    app.registration().start("user1", email);
-   // List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
-    List<MailMessage> mailMessages = app.james().waitForMail(username,password,90000);
-    String confrmationLink = findConfrmationLink(mailMessages, email);
-    app.registration().finish(confrmationLink, password);
-    assertTrue(app.newSession().login(username,password));
+    app.james().createUser(username, password);
+    app.registration().start(username, email);
+    List<MailMessage> mailMessages = app.james().waitForMail(username, password,90000);
+    String confirmationLink = findConfirmationLink(mailMessages, email);
+    app.registration().finish(confirmationLink, password);
+    assertTrue(app.newSession().login(username, password));
   }
 
-  private String  findConfrmationLink(List<MailMessage> mailMessages, String email) {
+  private String  findConfirmationLink(List<MailMessage> mailMessages, String email) {
     MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findFirst().get();
     VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
     return regex.getText(mailMessage.text);
   }
 
-  //@AfterMethod(alwaysRun = true)
-  public void stopMailServer(){
-    app.mail().stop();
-  }
+//  @AfterMethod(alwaysRun = true)
+//  public void stopMailServer(){
+//    app.mail().stop();
+//  }
 
 }
