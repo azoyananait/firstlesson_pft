@@ -7,6 +7,7 @@ public class Issue {
   private String subject;
   private String description;
 
+
   public int getId() {
     return id;
   }
