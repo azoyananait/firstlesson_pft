@@ -3,15 +3,12 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
-import java.util.concurrent.TimeUnit;
-
 public class HelperBase {
   protected WebDriver wd;
 
   public HelperBase(WebDriver wd) {
     this.wd = wd;
-    this.wd.manage().window().fullscreen();
-    this.wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    this.wd.manage().window().maximize();
   }
 
   protected void click(By locator) {
