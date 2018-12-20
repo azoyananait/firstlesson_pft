@@ -24,8 +24,6 @@ import static org.testng.Assert.assertEquals;
 public class GroupTests extends TestBase {
   private final GroupData registrationData = new GroupData().withName("test4");
 
-
-
   @BeforeMethod
   public void ensurePreconditions(){
     if (app.db().groups().size()==0) {
@@ -70,7 +68,6 @@ public class GroupTests extends TestBase {
     }
   }
 
-
   //@Test(dataProvider = "validGroups")
   @Test(dataProvider = "validGroupsFromJson")
   public void testGroupCreation(GroupData group) {
@@ -82,14 +79,13 @@ public class GroupTests extends TestBase {
       Groups after = app.db().groups();
       assertThat(after, equalTo(
               before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
-    }
+  }
 
   @Test
   public void testBadGroupCreation() {
     app.group().cleanCache();
-
     app.group().goToGroupPage();
-    Groups before = app.db().groups();;
+    Groups before = app.db().groups();
     GroupData group = new GroupData().withName("test'");
     app.group().create(group);
     assertThat(app.group().count(), equalTo(before.size()));

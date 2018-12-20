@@ -2,22 +2,17 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HelperBase {
   protected WebDriver wd;
-  private WebDriverWait wait;
 
   public HelperBase(WebDriver wd) {
     this.wd = wd;
-    this.wd.manage().window().maximize();
-    this.wait = new WebDriverWait(this.wd, 100);
+    this.wd.manage().window().setSize(new Dimension(1024, 768));
   }
 
   protected void click(By locator) {
-//    WebElement element = wd.findElement(locator);
-    WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+    WebElement element = wd.findElement(locator);
     Actions actions = new Actions(wd);
     actions.moveToElement(element).click().perform();
   }
