@@ -39,7 +39,7 @@ public class ApplicationManager{
 
     if(browser.equals(BrowserType.SAFARI)){
       wd = new SafariDriver();
-    }else if(browser.equals(BrowserType.OPERA)){
+    }else if(browser.equals(BrowserType.OPERA_BLINK)){
       wd = new OperaDriver();
     }else if(browser.equals(BrowserType.FIREFOX)){
       wd = new FirefoxDriver();
