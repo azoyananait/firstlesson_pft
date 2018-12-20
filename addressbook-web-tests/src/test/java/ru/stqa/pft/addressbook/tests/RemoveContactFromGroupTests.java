@@ -18,19 +18,26 @@ public class RemoveContactFromGroupTests extends TestBase {
     @BeforeMethod
     public void ensurePreconditions() {
       Groups groups = app.db().groups();
+      Contacts contacts = app.db().contacts();
 
-      if (app.db().groups().size() == 0) {
+      if (groups.size() == 0) {
         app.goTo().GroupPage();
         app.group().create(new GroupData().withName("testName").withFooter("FooterTest").withHeader("HeaderTest"));
         groups = app.db().groups();
       }
 
       app.goTo().goToHomePage();
-      if (app.db().contacts().size() == 0) {
+      if (contacts.size() == 0) {
         File photo = new File("src/test/resources/stru.png");
         app.contact().create(new RegisterData()
                 .withName("Test1").withMiddle("Test2").withLast("Test3").withNick("Test4").withTitle("Test5").withCompany("Test6").withAddress("Test7").withHome("Test8").withMobile("Test9").withWork("Test10").withFax("Test11").withEmail("Test@mail.ru").withPhoto(photo));
+        contacts = app.db().contacts();
       }
+
+      GroupData group = groups.iterator().next();
+      RegisterData contact = contacts.iterator().next();
+      app.contact().selectContactById(contact.getId());
+      app.contact().addInGroupById(group.getId());
     }
 
     @Test
@@ -41,7 +48,7 @@ public class RemoveContactFromGroupTests extends TestBase {
       GroupData group = contact.getGroups().iterator().next();
       app.goTo().goToHomePage();
 
-      while (iteratorContacts.hasNext()) {
+      do {
         if (contact.getGroups().size() > 0) {
           group = contact.getGroups().iterator().next();
           app.contact().findGroupById(group.getId());
@@ -49,7 +56,7 @@ public class RemoveContactFromGroupTests extends TestBase {
         } else {
           contact = iteratorContacts.next();
         }
-      }
+      } while (iteratorContacts.hasNext());
       app.contact().selectContactById(contact.getId());
       app.contact().removeContactFromGroup();
       app.goTo().selectGroupPage(group.getId());
