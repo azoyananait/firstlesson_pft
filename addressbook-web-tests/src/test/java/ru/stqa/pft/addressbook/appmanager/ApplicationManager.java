@@ -8,7 +8,6 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
@@ -40,7 +39,7 @@ public class ApplicationManager{
 
     if(browser.equals(BrowserType.SAFARI)){
       wd = new SafariDriver();
-    }else if(browser.equals(BrowserType.OPERA_BLINK)){
+    }else if(browser.equals(BrowserType.OPERA)){
       wd = new OperaDriver();
     }else if(browser.equals(BrowserType.FIREFOX)){
       wd = new FirefoxDriver();
