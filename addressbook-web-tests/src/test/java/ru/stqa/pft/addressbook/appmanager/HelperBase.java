@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 
 public class HelperBase {
   protected WebDriver wd;
@@ -10,12 +11,9 @@ public class HelperBase {
   }
 
   protected void click(By locator) {
-    try {
-      wd.findElement(locator).click();
-    }catch (WebDriverException e){
-      JavascriptExecutor executor = (JavascriptExecutor) wd;
-      executor.executeScript(locator.toString() + ".click()", wd.findElement(locator));
-    }
+    WebElement element = wd.findElement(locator);
+    Actions actions = new Actions(wd);
+    actions.moveToElement(element).click().perform();
   }
 
   protected void type(By locator, String text) {
