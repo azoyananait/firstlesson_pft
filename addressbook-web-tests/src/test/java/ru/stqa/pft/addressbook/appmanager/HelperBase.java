@@ -1,9 +1,6 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 
 public class HelperBase {
   protected WebDriver wd;
@@ -13,7 +10,12 @@ public class HelperBase {
   }
 
   protected void click(By locator) {
-    wd.findElement(locator).click();
+    try {
+      wd.findElement(locator).click();
+    }catch (WebDriverException e){
+      JavascriptExecutor executor = (JavascriptExecutor) wd;
+      executor.executeScript(locator.toString() + ".click()", wd.findElement(locator));
+    }
   }
 
   protected void type(By locator, String text) {
