@@ -54,7 +54,7 @@ public class TestBase {
       }
 
       JsonElement elm = array.get(0);
-      JsonElement state = elm.getAsJsonObject().get("state");
+      JsonElement state = elm.getAsJsonObject().get("state_name");
       String stringState = state.toString().replaceAll("^\"|\"$", "");
 
       if (stringState.equals("0")) {
